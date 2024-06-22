@@ -2,9 +2,12 @@ class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
         l = 0
         maxLen = 0
-        count = defaultdict(int)
+        count = {}
         for r in range(len(fruits)):
-            count[fruits[r]] += 1
+            if fruits[r] in count:
+                count[fruits[r]] += 1
+            else:
+                count[fruits[r]] = 1
             while len(count) > 2:
                 count[fruits[l]] -= 1
                 if count[fruits[l]] == 0:
