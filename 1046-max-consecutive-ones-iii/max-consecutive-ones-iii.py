@@ -3,7 +3,6 @@ class Solution:
         maxLen = 0
         l = 0
         zeros = 0
-        r = 0
         for r in range(len(nums)):
             if (nums[r]==0):
                 zeros += 1
