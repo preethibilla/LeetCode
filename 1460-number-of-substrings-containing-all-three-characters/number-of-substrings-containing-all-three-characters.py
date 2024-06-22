@@ -8,7 +8,6 @@ class Solution:
                 'b':0,
                 'c':0
                 }
-
         for r in range(len(s)):
             if s[r] in dict:
                 dict[s[r]] += 1
