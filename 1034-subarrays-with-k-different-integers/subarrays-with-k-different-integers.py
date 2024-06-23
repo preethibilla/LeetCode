@@ -1,6 +1,8 @@
 class Solution:
     def subarraysWithKDistinct(self, nums: List[int], k: int) -> int:
         def atMost(S):
+            if S < 0:
+                return 0
             l = 0
             d = {}
             count = 0
