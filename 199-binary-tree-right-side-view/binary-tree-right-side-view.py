@@ -9,11 +9,11 @@ class Solution:
         if not root:
             return []
         right_Side = []
-        queue = [root]
+        queue = deque([root])
         while queue:
             level_length = len(queue)
             for i in range(level_length):
-                current = queue.pop(0)
+                current = queue.popleft()
                 if current.left:
                     queue.append(current.left)
                 if current.right:
