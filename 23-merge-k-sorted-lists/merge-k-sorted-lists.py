@@ -5,29 +5,31 @@
 #         self.next = next
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        if not lists or len(lists) == 0:
-            return None
-        while len(lists) > 1:
-            mergedLists = []
-            for i in range(0,len(lists),2):
-                l1 = lists[i]
-                l2 = lists[i+1] if (i+1) < len(lists) else None
-                mergedLists.append(self.mergeList(l1,l2))
-            lists = mergedLists
-        return lists[0]
+        # Define a min-heap
+        min_heap = []
 
+        # Initialize the heap with the head of each linked list
+        for i in range(len(lists)):
+            if lists[i]:
+                # Push tuple of (node value, index of the list, node)
+                heappush(min_heap, (lists[i].val, i, lists[i]))
 
-    def mergeList(self,l1,l2):
+        # Dummy node to serve as the starting point of the merged linked list
         dummy = ListNode()
-        tail = dummy
-        while l1 and l2:
-            if l1.val < l2.val:
-                tail.next = l1
-                l1 = l1.next
-            else:
-                tail.next = l2
-                l2 = l2.next
-            tail = tail.next
-        tail.next = l1 if l1 else l2
+        current = dummy
+
+        # Process the heap until it is empty
+        while min_heap:
+            # Extract the smallest node from the heap
+            val, i, node = heappop(min_heap)
+
+            # Add the smallest node to the merged linked list
+            current.next = node
+            current = current.next
+
+            # If there is a next node in the same list, push it to the heap
+            if node.next:
+                heappush(min_heap, (node.next.val, i, node.next))
+
+        # Return the merged linked list, starting from the dummy node's next
         return dummy.next
-        
