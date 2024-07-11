@@ -6,17 +6,27 @@
 #         self.right = right
 class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
-# Base case: if the root is None, the depth is 0
+# Handle the edge case of an empty tree
         if not root:
             return 0
         
-        # If left subtree is None, only consider the right subtree
-        if not root.left:
-            return self.minDepth(root.right) + 1
+        # Initialize the queue with the root node and depth 1
+        queue = deque([(root, 1)])
         
-        # If right subtree is None, only consider the left subtree
-        if not root.right:
-            return self.minDepth(root.left) + 1
+        while queue:
+            # Pop the current node and its depth
+            node, depth = queue.popleft()
+            
+            # Check if the current node is a leaf node
+            if not node.left and not node.right:
+                return depth
+            
+            # Add the left child to the queue if it exists
+            if node.left:
+                queue.append((node.left, depth + 1))
+            
+            # Add the right child to the queue if it exists
+            if node.right:
+                queue.append((node.right, depth + 1))
         
-        # If both subtrees are not None, return the minimum depth of the two subtrees + 1
-        return min(self.minDepth(root.left), self.minDepth(root.right)) + 1
+        return 0  # This line will never be reached because we always return when a leaf node is found
