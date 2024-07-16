@@ -1,6 +1,6 @@
 class Solution:
     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
-         # Get the number of rows and columns in the matrix
+        # Get the number of rows and columns in the matrix
         rows, cols = len(mat), len(mat[0])
         
         # Initialize a queue to perform BFS
