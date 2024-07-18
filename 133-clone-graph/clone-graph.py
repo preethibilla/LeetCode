@@ -9,32 +9,32 @@ class Node:
 from typing import Optional
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        # Base case: if the input node is None, return None
         if not node:
             return None
-
-        # Dictionary to store the visited nodes and their clones
+        
+        # Dictionary to save the cloned nodes
         visited = {}
-
-        # Helper function to perform DFS and clone the graph
-        def dfs(node):
-            # If the node has already been cloned, return the cloned node
-            if node in visited:
-                return visited[node]
-
-            # Create a new clone of the node with the same value
-            clone_node = Node(node.val)
-            # Store the clone in the visited dictionary
-            visited[node] = clone_node
-
-            # Recursively clone all neighbors
-            for neighbor in node.neighbors:
-                # Add the cloned neighbors to the clone_node's neighbors list
-                clone_node.neighbors.append(dfs(neighbor))
-
-            # Return the cloned node
-            return clone_node
-
-        # Start the DFS from the given node
-        return dfs(node)
+        
+        # Initialize the queue with the starting node
+        queue = deque([node])
+        
+        # Clone the root node and put it in the visited dictionary
+        visited[node] = Node(node.val)
+        
+        while queue:
+            curr_node = queue.popleft()
+            
+            # Iterate through all the neighbors of the current node
+            for neighbor in curr_node.neighbors:
+                if neighbor not in visited:
+                    # Clone the neighbor and put it in the visited dictionary
+                    visited[neighbor] = Node(neighbor.val)
+                    # Enqueue the neighbor for further traversal
+                    queue.append(neighbor)
+                    
+                # Add the cloned neighbor to the current node's clone's neighbors list
+                visited[curr_node].neighbors.append(visited[neighbor])
+        
+        # Return the clone of the starting node
+        return visited[node]
         
