@@ -1,22 +1,28 @@
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-         # Initialize two variables to store the maximum sums
-        # max_sum will hold the overall maximum subarray sum found so far
-        # current_sum will hold the maximum subarray sum that ends at the current position
-        max_sum = nums[0]
-        current_sum = nums[0]
+        # Initialize maxSub to the first element of the array.
+        # This will store the maximum subarray sum found so far.
+        maxSub = nums[0]
         
-        # Iterate over the array starting from the second element
-        for i in range(1, len(nums)):
-            # Update current_sum to be the maximum of the current element alone or the current element added to current_sum
-            # This decides whether to start a new subarray at the current element or to continue the existing subarray
-            current_sum = max(nums[i], current_sum + nums[i])
+        # Initialize curSum to 0.
+        # This will store the current subarray sum.
+        curSum = 0
+        
+        # Iterate through each element in the array.
+        for n in nums:
+            # If curSum is less than 0, reset it to 0.
+            # This is because a negative sum will reduce the total sum of any subarray it is part of.
+            if curSum < 0:
+                curSum = 0
             
-            # Update max_sum to be the maximum of itself and current_sum
-            # This ensures that max_sum always holds the maximum subarray sum found so far
-            max_sum = max(max_sum, current_sum)
+            # Add the current element to curSum.
+            curSum += n
+            
+            # Update maxSub to be the maximum of maxSub and curSum.
+            # This ensures maxSub always holds the highest subarray sum found so far.
+            maxSub = max(curSum, maxSub)
         
-        # Return the overall maximum subarray sum
-        return max_sum
+        # Return the maximum subarray sum.
+        return maxSub
 
         
