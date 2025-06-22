@@ -8,7 +8,7 @@ class Solution:
             pos = len(sub)  # Default insert position (at the end)
 
             while left <= right:
-                mid = (left + right) // 2
+                mid = left+(right-left) // 2
                 if sub[mid] >= num:
                     pos = mid
                     right = mid - 1
