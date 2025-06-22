@@ -1,27 +1,35 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()
+        nums.sort()  # Step 1: sort the array
         result = []
-        for i in range(len(nums)-2):
-            if i > 0 and nums[i] == nums[i-1]:
-                continue
-            l = i + 1
-            r = len(nums)-1
-            while l < r:
-                Sum = nums[i] + nums[l] + nums[r]
-                if Sum < 0:
-                    l += 1
-                elif Sum > 0:
-                    r -= 1
-                else: 
-                    result.append([nums[i],nums[l],nums[r]])
-                    while l < r and nums[l] == nums[l+1]:
-                        l += 1
-                    while l < r and nums[r] == nums[r-1]:
-                        r -= 1
-                    l += 1
-                    r -= 1
-        return result
 
-                
-        
+        for i in range(len(nums)):
+            # Skip duplicate fixed numbers
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+
+            left = i + 1
+            right = len(nums) - 1
+
+            while left < right:
+                total = nums[i] + nums[left] + nums[right]
+
+                if total < 0:
+                    left += 1
+                elif total > 0:
+                    right -= 1
+                else:
+                    # Found a valid triplet
+                    result.append([nums[i], nums[left], nums[right]])
+
+                    # Skip duplicates for left and right
+                    while left < right and nums[left] == nums[left + 1]:
+                        left += 1
+                    while left < right and nums[right] == nums[right - 1]:
+                        right -= 1
+
+                    # Move pointers to next unique elements
+                    left += 1
+                    right -= 1
+
+        return result
