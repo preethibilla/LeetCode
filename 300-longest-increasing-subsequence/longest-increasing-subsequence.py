@@ -1,24 +1,36 @@
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        sub = []  # sub[i] = smallest possible tail of LIS of length i+1
+        # This list will store the smallest possible tail of all increasing subsequences
+        # of different lengths. The length of this list is the length of LIS.
+        sub = []
 
         for num in nums:
-            # Implement binary search manually to find the position to insert/replace
+            # Binary search to find the index in 'sub' where 'num' should go
             left, right = 0, len(sub) - 1
-            pos = len(sub)  # Default insert position (at the end)
+            pos = len(sub)  # Default position to append if 'num' is the largest
 
             while left <= right:
-                mid = left+(right-left) // 2
+                mid = (left + right) // 2
+
                 if sub[mid] >= num:
+                    # If current mid element is >= num, this could be a valid position
+                    # but we continue to search on the left to find the earliest
                     pos = mid
                     right = mid - 1
                 else:
+                    # If current mid element is < num, move right to find larger ones
                     left = mid + 1
 
+            # If 'pos' is equal to length of sub, num is larger than all elements
+            # and can extend the LIS by one element
             if pos == len(sub):
-                sub.append(num)  # Extend the subsequence
+                sub.append(num)
             else:
-                sub[pos] = num  # Replace to keep it minimal
+                # Otherwise, replace the element at index 'pos' to maintain the
+                # smallest possible tail value for subsequences of this length
+                sub[pos] = num
 
+        # Length of the 'sub' array represents the length of LIS
         return len(sub)
+
         
